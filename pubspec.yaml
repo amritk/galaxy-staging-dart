@@ -1,0 +1,8 @@
+name: demo_api_scalar_galaxy
+description: "The Scalar Galaxy is an example OpenAPI document to test OpenAPI tools and libraries. It's a fictional universe with fictional planets and fictional data. Get all the data for all planets."
+version: 0.1.0 # x-release-please-version
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+dev_dependencies:
+  lints: ^5.0.0
+  test: ^1.25.0
