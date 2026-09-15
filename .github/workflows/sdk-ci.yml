@@ -1,0 +1,26 @@
+name: Dart SDK CI
+
+on:
+  push:
+  pull_request:
+
+# Least privilege for a verification-only workflow: every job below only reads the checked-out
+# tree, so the run's GITHUB_TOKEN is narrowed to that regardless of the repository's default
+# grants. Declared at the workflow level so a job added later inherits the floor.
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: dart-lang/setup-dart@65eb853c7ba17dde3be364c3d2858773e7144260 # v1.7.2
+        with:
+          sdk: "3"
+      - run: dart pub get
+      - run: dart analyze
+      # Verification only, never auto-fix: the SDK is generated formatted, so a changed file means
+      # either hand-edited custom code or a regenerate that was not committed.
+      - run: dart format --output=none --set-exit-if-changed .
+      - run: dart test
